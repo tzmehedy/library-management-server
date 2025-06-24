@@ -64,4 +64,29 @@ const getAllBooks = async(req:Request, res:Response)=>{
 
 }
 
-export { createBook, getAllBooks };
+const getBookById = async(req:Request, res:Response)=>{
+  try{
+    const bookId = req.params.bookId
+  const book = await Book.findById(bookId)
+  res.json({
+    success: true,
+    message: "Books retrieved successfully",
+    data: book,
+  });
+  }catch(err:any){
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
+    res.json({
+      success: false,
+      message: err._message,
+      error: modifiedError,
+    });
+
+  }
+
+
+}
+
+export { createBook, getAllBooks, getBookById }
