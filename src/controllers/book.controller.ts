@@ -10,12 +10,16 @@ const createBook = async(req:Request, res:Response)=>{
           message: "Book created successfully",
           data: book,
         });
-
-    }catch(err){
+    }
+    catch(err:any){
+      const modifiedError = {
+        errors: err.errors,
+        name: err.name
+      } 
         res.json({
           success: false,
-          message: "Validation failed",
-          data: err,
+          message: err._message,
+          error: modifiedError,
         });
     }
 }
