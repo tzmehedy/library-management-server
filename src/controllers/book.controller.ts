@@ -86,7 +86,7 @@ const updateBook = async (req: Request, res: Response) => {
     const book = await Book.findByIdAndUpdate(bookId, payload, { new: true });
     res.json({
       success: true,
-      message: "Books retrieved successfully",
+      message: "Books updated successfully",
       data: book,
     });
   } catch (err: any) {
@@ -102,4 +102,26 @@ const updateBook = async (req: Request, res: Response) => {
   }
 };
 
-export { createBook, getAllBooks, getBookById, updateBook };
+const deleteBook = async (req: Request, res: Response) => {
+  try {
+    const bookId = req.params.bookId;
+    const book = await Book.findByIdAndDelete(bookId);
+    res.json({
+      success: true,
+      message: "Books deleted successfully",
+      data: book,
+    });
+  } catch (err: any) {
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
+    res.json({
+      success: false,
+      message: err._message,
+      error: modifiedError,
+    });
+  }
+};
+
+export { createBook, getAllBooks, getBookById, updateBook, deleteBook };
