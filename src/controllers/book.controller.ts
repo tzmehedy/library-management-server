@@ -24,4 +24,44 @@ const createBook = async(req:Request, res:Response)=>{
     }
 }
 
-export {createBook}
+
+
+const getAllBooks = async(req:Request, res:Response)=>{
+  try{
+    const filter = req.query.filter
+    const sortBy = req.query.sortBy
+    const sort = req.query.sort
+    const limit = parseInt(`${req.query.limit}`)
+
+    console.log(filter, sortBy, sort, limit)
+    let books = []
+    if (filter || sortBy || sort || limit) {
+      books = await Book.find({ genre: `${filter}` })
+        .sort({ sortBy: sort === "asc" ? 1 : -1 })
+        .limit(limit);
+    }
+    else{
+      books = await Book.find().limit(10);
+    }
+    res.json({
+      success: true,
+      message: "Books retrieved successfully",
+      data: books,
+    });
+
+  }catch(err:any){
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
+    res.json({
+      success: false,
+      message: err._message,
+      error: modifiedError,
+    });
+
+  }
+
+}
+
+export { createBook, getAllBooks };
