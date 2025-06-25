@@ -1,4 +1,3 @@
-
 import { model, Schema } from "mongoose";
 import { IBook } from "../interfaces/book.interface";
 
@@ -54,6 +53,6 @@ const booksSchema = new Schema<IBook>(
   }
 );
 
-const Book = model("Book", booksSchema)
+const Book = model<IBook>("Book", booksSchema)
 export default Book
 
