@@ -5,6 +5,9 @@ const createBorrow = async (req: Request, res: Response) => {
   try {
     const payload = req.body;
     const book = await Borrow.create(payload);
+
+    Borrow.updateAvailability(payload.book)
+    
     res.json({
       success: true,
       message: "Book borrowed successfully",

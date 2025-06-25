@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
-import { IBorrow } from "../interfaces/borrow.interface";
+import { BorrowBookStatic, IBorrow } from "../interfaces/borrow.interface";
 import Book from "./book.model";
 
-const borrowSchema = new Schema<IBorrow>({
+const borrowSchema = new Schema<IBorrow, BorrowBookStatic>({
   book: {
     type: Schema.Types.ObjectId,
     ref: "Book",
@@ -22,6 +22,14 @@ const borrowSchema = new Schema<IBorrow>({
   timestamps:true
 });
 
+borrowSchema.static("updateAvailability", async function(bookId){
+  const book = await Book.findById(bookId)
+  if(book?.copies === 0){
+    await Book.findByIdAndUpdate(bookId, {available: false})
+  }
+});
+
+
 borrowSchema.pre("save", async function(next){
   const book = await Book.findById(this.book)
   const currentCopies = book?.copies
@@ -34,15 +42,11 @@ borrowSchema.pre("save", async function(next){
 })
 
 borrowSchema.post("save", async function(doc){
-  console.log("inside post hook")
-  console.log(doc)
   const book = await Book.findById(doc.book);
-  console.log(book)
   const remainingCopies = book?.copies as number - doc.quantity
-  console.log(remainingCopies)
   await Book.findByIdAndUpdate(doc.book, {copies: remainingCopies})
 })
 
-const Borrow = model<IBorrow>("Borrow", borrowSchema)
+const Borrow = model<IBorrow,BorrowBookStatic>("Borrow", borrowSchema)
 
 export {Borrow}
