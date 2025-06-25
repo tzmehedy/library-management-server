@@ -7,9 +7,9 @@ let server:Server
 async function main(){
     try{
         await mongoose.connect(`${config.database_url}`)
-        console.log("The library server is running")
+        console.log("✅ The mongodb connected")
         server = app.listen(config.port,()=>{
-            console.log(`The server is running on the port ${config.port}`)
+            console.log(`✅ The server is running on the port ${config.port}`)
         })
     }catch(err){
         console.log(err)
