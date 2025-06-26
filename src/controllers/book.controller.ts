@@ -1,24 +1,32 @@
 import { Request, Response } from "express";
 import Book from "../models/book.model";
+import { z } from "zod";
+
+
+const createBookValidationWithZod = z.object({
+  title: z.string(),
+  author: z.string(),
+  genre: z.string(),
+  isbn: z.string(),
+  description: z.string().optional(),
+  copies: z.number()
+})
 
 const createBook = async (req: Request, res: Response) => {
   try {
     const payload = req.body;
-    const book = await Book.create(payload);
-    res.json({
+    const checkedPayload = await createBookValidationWithZod.parseAsync(payload)
+    const book = await Book.create(checkedPayload)
+    res.status(201).json({
       success: true,
       message: "Book created successfully",
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
-    res.json({
+    res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -29,8 +37,6 @@ const getAllBooks = async (req: Request, res: Response) => {
     const sortBy = req.query.sortBy;
     const sort = req.query.sort;
     const limit = parseInt(`${req.query.limit}`);
-
-    console.log(filter, sortBy, sort, limit);
     let books = [];
     if (filter || sortBy || sort || limit) {
       books = await Book.find({ genre: `${filter}` })
@@ -39,42 +45,35 @@ const getAllBooks = async (req: Request, res: Response) => {
     } else {
       books = await Book.find().limit(10);
     }
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
       data: books,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
-    res.json({
+    res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
+
 
 const getBookById = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;
     const book = await Book.findById(bookId);
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
-    res.json({
+    res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -84,20 +83,16 @@ const updateBook = async (req: Request, res: Response) => {
     const bookId = req.params.bookId;
     const payload = req.body;
     const book = await Book.findByIdAndUpdate(bookId, payload, { new: true });
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Books updated successfully",
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
-    res.json({
+    res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -105,21 +100,17 @@ const updateBook = async (req: Request, res: Response) => {
 const deleteBook = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;
-    const book = await Book.findByIdAndDelete(bookId);
-    res.json({
+    const book = await Book.findByIdAndDelete(bookId, {new:true});
+    res.status(200).json({
       success: true,
       message: "Books deleted successfully",
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
-    res.json({
+    res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };

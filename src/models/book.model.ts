@@ -45,6 +45,7 @@ const booksSchema = new Schema<IBook>(
     available: {
       type: Boolean,
       default: true,
+      required:true,
     },
   },
   {
