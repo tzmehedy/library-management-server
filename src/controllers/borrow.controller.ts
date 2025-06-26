@@ -6,8 +6,8 @@ const createBorrow = async (req: Request, res: Response) => {
     const payload = req.body;
     const book = await Borrow.create(payload);
 
-    Borrow.updateAvailability(payload.book)
-    
+    Borrow.updateAvailability(payload.book);
+
     res.json({
       success: true,
       message: "Book borrowed successfully",
@@ -23,10 +23,36 @@ const createBorrow = async (req: Request, res: Response) => {
 
 const getBorrow = async (req: Request, res: Response) => {
   try {
-    const borrowBooks = await Borrow.find().populate("book");
+    const borrowBooks = await Borrow.aggregate([
+      {
+        $group: { _id: "$book", totalQuantity: { $sum: "$quantity" } },
+      },
+      {
+        $lookup: {
+          from: "books",
+          localField: "_id",
+          foreignField: "_id",
+          as: "book",
+        },
+      },
+
+      {
+        $unwind: "$book",
+      },
+      {
+        $project: {
+          _id: 0,
+          book: {
+            title: "$book.title",
+            isbn: "$book.isbn",
+          },
+          totalQuantity: 1,
+        },
+      },
+    ]);
     res.json({
       success: true,
-      message: "Book borrowed successfully",
+      message: "Borrowed books summary retrieved successfully",
       data: borrowBooks,
     });
   } catch (err: any) {
