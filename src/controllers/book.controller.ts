@@ -23,10 +23,14 @@ const createBook = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
     res.status(400).json({
       success: false,
       message: err._message,
-      error: err,
+      error: modifiedError,
     });
   }
 };
@@ -51,10 +55,15 @@ const getAllBooks = async (req: Request, res: Response) => {
       data: books,
     });
   } catch (err: any) {
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
+    
     res.status(400).json({
       success: false,
       message: err._message,
-      error: err,
+      error: modifiedError,
     });
   }
 };
@@ -70,10 +79,14 @@ const getBookById = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
     res.status(400).json({
       success: false,
       message: err._message,
-      error: err,
+      error: modifiedError,
     });
   }
 };
@@ -89,10 +102,14 @@ const updateBook = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
     res.status(400).json({
       success: false,
       message: err._message,
-      error: err,
+      error: modifiedError,
     });
   }
 };
@@ -107,10 +124,14 @@ const deleteBook = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
+    const modifiedError = {
+      errors: err.errors,
+      name: err.name,
+    };
     res.status(400).json({
       success: false,
       message: err._message,
-      error: err,
+      error: modifiedError,
     });
   }
 };

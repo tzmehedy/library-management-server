@@ -8,15 +8,15 @@ const createBorrow = async (req: Request, res: Response) => {
 
     Borrow.updateAvailability(payload.book);
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Book borrowed successfully",
       data: book,
     });
-  } catch (err) {
-    res.json({
+  } catch (err:any) {
+    res.status(400).json({
       success: false,
-      error: err,
+      error: err.message,
     });
   }
 };
