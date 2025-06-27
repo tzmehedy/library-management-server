@@ -10,3 +10,11 @@ Key Features:
 7. A user also see how many no of books were borrow of a book.
 
 
+How to run this project locally:
+1. Install express mongoose zod dot env. ---> npm i express mongoose zod dotenv
+2. Create a env file.
+3. Set a database url named DATABASE_URL and PORT no.
+4. Now run ---> npm run dev
+
+
+
