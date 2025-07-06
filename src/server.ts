@@ -1,6 +1,6 @@
 import { Server } from "http"
 import app from "./app"
-import config from "./config"
+import config from "./app/config"
 import mongoose from "mongoose"
 let server:Server
 

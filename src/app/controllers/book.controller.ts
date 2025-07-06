@@ -41,13 +41,23 @@ const getAllBooks = async (req: Request, res: Response) => {
     const sortBy = req.query.sortBy;
     const sort = req.query.sort;
     const limit = parseInt(`${req.query.limit}`);
-    let books = [];
-    if (filter || sortBy || sort || limit) {
-      books = await Book.find({ genre: `${filter}` })
-        .sort({ sortBy: sort === "asc" ? 1 : -1 })
-        .limit(limit);
-    } else {
-      books = await Book.find().limit(10);
+    
+    let books:any = [];
+    let query = {}
+    if(filter){
+      query = {
+        genre: filter
+      }
+    }
+    
+    const sortOptions: any = { [sortBy as string]: sort };
+
+    if(limit){
+      books = await Book.find(query).sort(sortOptions).limit(limit)
+    }
+
+    else{
+      books = await Book.find(query).sort(sortOptions).limit(10)
     }
     res.status(200).json({
       success: true,
