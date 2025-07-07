@@ -77,16 +77,16 @@ src/
       **GET** /api/borrow
 
 **Getting Started**
-    git clone https://github.com/your-username/library-management-api.git
-    cd library-management-api
-    npm install
+- git clone https://github.com/your-username/library-management-api.git 
+- cd library-management-api**
+- npm install**
 
 **Run**
-npm run dev        # Development
-npm run build      # Build
+- npm run dev        # Development
+- npm run build      # Build
 
 **Live Link**
-https://library-management-server-omega-hazel.vercel.app/
+- https://library-management-server-omega-hazel.vercel.app/
 
 
 
