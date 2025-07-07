@@ -1,20 +1,95 @@
-Key Features:
+# 📚 Library Management API With Express JS, Typescript and MongoDB(Mongoose).
 
-1. A user can insert a book in the database.
-2. A user can get a book information by usng bookId,
-3. A user can get all books information. In this API there use filtering, sorting and limit.
-4. A user can update a book information by using bookId.
-5. A user can delete a book by using a specific bookId.
+A robust and type-safe backend API for managing library operations such as book inventory, borrowing books — built with 
+**Express.js**, 
+**TypeScript**, 
+**MongoDB** using **Mongoose**.
 
-6. On the other hand a user can borrow a book.
-7. A user also see how many no of books were borrow of a book.
+---
+
+## 🎯 Objective
+
+Develop a full-featured Library Management System API that supports book management, borrowing logic, and aggregation reporting book summery, business logic enforcement, and Mongoose middleware and Pre, Post hooks.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend Framework**: Express.js
+- **Language**: TypeScript
+- **Database**: MongoDB
+- **ODM**: Mongoose
+- **Runtime**: Node.js
+
+---
+
+## 🗂️ Project Structure
+src/
+|--app
+    ├── config/ # Environment and DB config
+    ├── controllers/ # Request handlers
+    ├── models/ # Mongoose models (Book, Borrow)
+    ├── routes/ # API route definitions
+├── app.ts # app setup
+└── server.ts # Entry point
+
+## 🔧 Core Features
+
+- ✅ Schema validation for books and borrow records
+- 🔁 Business logic for book availability on borrow
+- 📊 Borrow summary via MongoDB aggregation
+- 🧠 Use of Mongoose static/instance methods
+- ⛓️ Mongoose middleware (`pre`, `post`)
+- 🔍 Filtering, sorting & pagination on book queries
+- 💡 Consistent error response format
+
+## 🌐 API Endpoints
+
+### 1. 📘 Create Book
+      **POST** `/api/books`
+
+    2. 📚 Get All Books
+      **GET** `/api/books`
+
+      Supports query:
+
+      filter → by genre
+
+      sortBy → field to sort (createdAt, copies, etc.)
+
+      sort → asc or desc
+
+      limit → number of results
+
+    3. 📖 Get Book by ID
+      **GET** /api/books/:bookId
+    
+    4. ✏️ Update Book
+      **PUT** /api/books/:bookId
+
+    5. ❌ Delete Book
+      **DELETE** /api/books/:bookId
+
+    6. 📥 Borrow a Book
+      **POST** /api/borrow
+
+    7. 📊 Borrowed Books Summary (Aggregation)
+      **GET** /api/borrow
+
+**Getting Started**
+    git clone https://github.com/your-username/library-management-api.git
+    cd library-management-api
+    npm install
+
+**Run**
+npm run dev        # Development
+npm run build      # Build
+
+**Live Link**
+https://library-management-server-omega-hazel.vercel.app/
 
 
-How to run this project locally:
-1. Install express mongoose zod dot env. ---> npm i express mongoose zod dotenv
-2. Create a env file.
-3. Set a database url named DATABASE_URL and PORT no.
-4. Now run ---> npm run dev
+
 
 
 

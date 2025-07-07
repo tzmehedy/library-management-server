@@ -55,12 +55,15 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const limit = parseInt(`${req.query.limit}`);
         let books = [];
         let query = {};
+        let sortOptions = {};
         if (filter) {
             query = {
                 genre: filter
             };
         }
-        const sortOptions = { [sortBy]: sort };
+        if (sortBy && sort) {
+            sortOptions = { [sortBy]: sort };
+        }
         if (limit) {
             books = yield book_model_1.default.find(query).sort(sortOptions).limit(limit);
         }

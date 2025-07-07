@@ -41,21 +41,23 @@ const getAllBooks = async (req: Request, res: Response) => {
     const sortBy = req.query.sortBy;
     const sort = req.query.sort;
     const limit = parseInt(`${req.query.limit}`);
+ 
     
     let books:any = [];
     let query = {}
+    let sortOptions = {}
     if(filter){
       query = {
         genre: filter
       }
     }
+    if(sortBy && sort){
+      sortOptions = { [sortBy as string]: sort };
+    }
     
-    const sortOptions: any = { [sortBy as string]: sort };
-
     if(limit){
       books = await Book.find(query).sort(sortOptions).limit(limit)
     }
-
     else{
       books = await Book.find(query).sort(sortOptions).limit(10)
     }
