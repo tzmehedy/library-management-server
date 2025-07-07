@@ -78,7 +78,6 @@ const getAllBooks = async (req: Request, res: Response) => {
   }
 };
 
-
 const getBookById = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;
