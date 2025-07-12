@@ -23,14 +23,10 @@ const createBook = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
     res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -59,7 +55,7 @@ const getAllBooks = async (req: Request, res: Response) => {
       books = await Book.find(query).sort(sortOptions).limit(limit)
     }
     else{
-      books = await Book.find(query).sort(sortOptions).limit(10)
+      books = await Book.find(query).sort(sortOptions)
     }
     res.status(200).json({
       success: true,
@@ -67,15 +63,11 @@ const getAllBooks = async (req: Request, res: Response) => {
       data: books,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
     
     res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -90,14 +82,11 @@ const getBookById = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
+   
     res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -113,14 +102,10 @@ const updateBook = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
     res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };
@@ -135,14 +120,11 @@ const deleteBook = async (req: Request, res: Response) => {
       data: book,
     });
   } catch (err: any) {
-    const modifiedError = {
-      errors: err.errors,
-      name: err.name,
-    };
+   
     res.status(400).json({
       success: false,
       message: err._message,
-      error: modifiedError,
+      error: err,
     });
   }
 };

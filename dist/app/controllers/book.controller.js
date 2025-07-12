@@ -35,14 +35,10 @@ const createBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (err) {
-        const modifiedError = {
-            errors: err.errors,
-            name: err.name,
-        };
         res.status(400).json({
             success: false,
             message: err._message,
-            error: modifiedError,
+            error: err,
         });
     }
 });
@@ -68,7 +64,7 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             books = yield book_model_1.default.find(query).sort(sortOptions).limit(limit);
         }
         else {
-            books = yield book_model_1.default.find(query).sort(sortOptions).limit(10);
+            books = yield book_model_1.default.find(query).sort(sortOptions);
         }
         res.status(200).json({
             success: true,
@@ -77,14 +73,10 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
     catch (err) {
-        const modifiedError = {
-            errors: err.errors,
-            name: err.name,
-        };
         res.status(400).json({
             success: false,
             message: err._message,
-            error: modifiedError,
+            error: err,
         });
     }
 });
@@ -100,14 +92,10 @@ const getBookById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
     catch (err) {
-        const modifiedError = {
-            errors: err.errors,
-            name: err.name,
-        };
         res.status(400).json({
             success: false,
             message: err._message,
-            error: modifiedError,
+            error: err,
         });
     }
 });
@@ -124,14 +112,10 @@ const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (err) {
-        const modifiedError = {
-            errors: err.errors,
-            name: err.name,
-        };
         res.status(400).json({
             success: false,
             message: err._message,
-            error: modifiedError,
+            error: err,
         });
     }
 });
@@ -147,14 +131,10 @@ const deleteBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (err) {
-        const modifiedError = {
-            errors: err.errors,
-            name: err.name,
-        };
         res.status(400).json({
             success: false,
             message: err._message,
-            error: modifiedError,
+            error: err,
         });
     }
 });
