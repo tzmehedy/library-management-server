@@ -49,6 +49,9 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const sortBy = req.query.sortBy;
         const sort = req.query.sort;
         const limit = parseInt(`${req.query.limit}`);
+        const page = req.query.page;
+        const size = req.query.size;
+        console.log("inside server", page, size, limit);
         let books = [];
         let query = {};
         let sortOptions = {};

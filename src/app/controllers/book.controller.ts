@@ -37,8 +37,9 @@ const getAllBooks = async (req: Request, res: Response) => {
     const sortBy = req.query.sortBy;
     const sort = req.query.sort;
     const limit = parseInt(`${req.query.limit}`);
- 
-    
+    const page = parseInt(`${req.query.page}`) - 1;
+    const size = parseInt(`${req.query.size}`);
+
     let books:any = [];
     let query = {}
     let sortOptions = {}
@@ -55,7 +56,7 @@ const getAllBooks = async (req: Request, res: Response) => {
       books = await Book.find(query).sort(sortOptions).limit(limit)
     }
     else{
-      books = await Book.find(query).sort(sortOptions)
+      books = await Book.find(query).sort(sortOptions).skip(page*size).limit(size)
     }
     res.status(200).json({
       success: true,
