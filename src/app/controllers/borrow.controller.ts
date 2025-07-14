@@ -7,7 +7,7 @@ const createBorrow = async (req: Request, res: Response) => {
     const payload = req.body;
     const book = await Borrow.create(payload);
 
-    Borrow.updateAvailability(payload.book);
+    await Borrow.updateAvailability(payload.book);
 
     res.status(201).json({
       success: true,
