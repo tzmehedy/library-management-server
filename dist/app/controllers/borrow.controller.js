@@ -15,7 +15,7 @@ const createBorrow = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const payload = req.body;
         const book = yield borrow_model_1.Borrow.create(payload);
-        borrow_model_1.Borrow.updateAvailability(payload.book);
+        yield borrow_model_1.Borrow.updateAvailability(payload.book);
         res.status(201).json({
             success: true,
             message: "Book borrowed successfully",

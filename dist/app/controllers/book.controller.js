@@ -49,9 +49,8 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const sortBy = req.query.sortBy;
         const sort = req.query.sort;
         const limit = parseInt(`${req.query.limit}`);
-        const page = req.query.page;
-        const size = req.query.size;
-        console.log("inside server", page, size, limit);
+        const page = parseInt(`${req.query.page}`) - 1;
+        const size = parseInt(`${req.query.size}`);
         let books = [];
         let query = {};
         let sortOptions = {};
@@ -67,7 +66,7 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             books = yield book_model_1.default.find(query).sort(sortOptions).limit(limit);
         }
         else {
-            books = yield book_model_1.default.find(query).sort(sortOptions);
+            books = yield book_model_1.default.find(query).sort(sortOptions).skip(page * size).limit(size);
         }
         res.status(200).json({
             success: true,

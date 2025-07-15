@@ -12,7 +12,7 @@ app.use(express_1.default.json());
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "https://library-management-server-omega-hazel.vercel.app/",
+        "https://library-management-sage-iota.vercel.app",
     ],
     credentials: true,
     optionSuccessStatus: 200,
